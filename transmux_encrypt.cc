@@ -25,9 +25,21 @@ int main(int argc, char** argv) {
     vector<StreamDescriptor> stream_descriptors;
     StreamDescriptor stream_descriptor;
 
-    stream_descriptor.input = "input.mp4";
+    if (argc < 3)
+    {
+        cout << "Usage: transmux_encrypt [input.mp4] [output.mp4]" << endl;
+        return 1;
+    }
+
+    stream_descriptor.input = argv[1];
     stream_descriptor.stream_selector = "video";
-    stream_descriptor.output = "output_video.mp4";
+
+    stream_descriptor.output = argv[2];
+    if (stream_descriptor.output.empty())
+    {
+        stream_descriptor.output = "output_video.mp4";
+    }
+    
     stream_descriptors.push_back(stream_descriptor);
 
     ChunkingParams& chunking_params = packaging_params.chunking_params;

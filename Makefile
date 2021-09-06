@@ -1,12 +1,12 @@
 CXX = g++
 
-APP = package_encrypt
+APP = transmux_encrypt
 
 INCLUDE = -I../shaka-packager/src/ -I../shaka-packager/src/packager/
 
-SRC = package_encrypt.cc
+SRC = transmux_encrypt.cc
 
-OBJ = package_encrypt.o
+OBJ = transmux_encrypt.o
 
 SHAKA_LIB_BASE = ../shaka-packager/src/out/Release/
 
@@ -16,15 +16,11 @@ LIBS_PATH = -L$(SHAKA_LIB_BASE)/ -L$(SHAKA_LIB_BASE)/obj/base/ -L$(SHAKA_LIB_BAS
 
 LIBS = -lpackager -lcrypto -lttml -lmpd_builder -lhls_builder -lfile -levent -lwidevine_pssh_data_proto -lstatus -lpacked_audio -ltrick_play -ldemuxer -lmp4 -lxml2 -licuuc -lchrome_zlib -lzlib_x86_simd -lgflags -lmp2t -lwebm -lmedia_event -lcodecs -ldvb -lpng -lmedia_base -lbase -lbase_static -lmodp_b64 -lwidevine_common_encryption_proto -levent -lversion -lsymbolize -lmanifest_base -lwebvtt -lwvm -lreplicator -lchunking -lmedia_info_proto -lprotobuf_full_do_not_use -lmkvmuxer -lcurl -lboringssl -lboringssl_asm -lrt -ldl -latomic -lm -lpthread -lstdc++
 
-ll: $(APP)
-
-#$(OBJ): $(SRC)
-
-#	$(CXX) -g -O -c $(CPPFLAGS) $(SRC) $(INCLUDE)
+all: $(APP)
 
 $(APP): $(SRC)
 
 	$(CXX) -g -O $(CPPFLAGS) $(SRC) $(INCLUDE) $(LIBS_PATH) $(LIBS) -o $(APP)
 
 clean:
-	rm package_encrypt
+	rm transmux_encrypt
