@@ -5,4 +5,4 @@ You can check out Shaka packager source code from https://github.com/google/shak
 
 "DRM raw key" is used to encrypt the content, so CENC (Common ENCryption)/AES128 counter mode is used to encrypt the input file by default. Encryption parameters such as key_id, key and iv are hardcoded in the program. 
 
-To clean the project, run "make clean".
+To clean up the project, run "make clean".
