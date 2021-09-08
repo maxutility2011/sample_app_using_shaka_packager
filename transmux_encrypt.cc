@@ -27,19 +27,24 @@ int main(int argc, char** argv) {
 
     if (argc < 3)
     {
-        cout << "Usage: transmux_encrypt [input.mp4] [output.mp4]" << endl;
+        cout << "Usage: transmux_encrypt [input_file] [output_file]" << endl;
         return 1;
     }
 
     stream_descriptor.input = argv[1];
     stream_descriptor.stream_selector = "video";
 
-    stream_descriptor.output = argv[2];
-    if (stream_descriptor.output.empty())
+    if (string(argv[2]).find(".ts") != string::npos)
     {
-        stream_descriptor.output = "output_video.mp4";
+        // stream_descriptor.segment_template must be specified for TS segment. Single TS segment is not allowed.
+        stream_descriptor.segment_template = "video_$Number$.ts";
+        // stream_descriptor.output is not allowed for transport stream.
     }
-    
+    else if (string(argv[2]).find(".mp4") != string::npos)
+    {
+        stream_descriptor.output = argv[2];
+    }
+
     stream_descriptors.push_back(stream_descriptor);
 
     ChunkingParams& chunking_params = packaging_params.chunking_params;
@@ -71,14 +76,14 @@ int main(int argc, char** argv) {
                                                 stream_descriptors);
     if (!status.ok()) 
     {
-        cout << "Error: Failed to initialize packager!!!" << endl;
+        cout << "Error: Failed to initialize packager!!! Error: " << status.ToString() << endl;
         exit(1);
     }
 
     status = packager.Run();
     if (!status.ok()) 
     {
-        cout << "Error: Failed to run packager!!!" << endl;
+        cout << "Error: Failed to run packager!!! Error: " << status.ToString() << endl;
         exit(1);
     }
 }
