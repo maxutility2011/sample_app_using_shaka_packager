@@ -1,5 +1,3 @@
-/* Fubo sample app for packaging and encrypting using Shaka packager. */
-
 #include <iostream>
 #include "packager/packager.h"
 #include "packager/app/stream_descriptor.h"
